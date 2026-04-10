@@ -1,15 +1,17 @@
-async function fetchGreeting() {
+export async function fetchGreeting() {
+    const url = process.env.BACKEND_URL || 'http://127.0.0.1:5000/';
+    
     try {
-        const response = await fetch('http://127.0.0.1:5000/');
-        if (!response.ok) throw new Error(`Błąd HTTP: ${response.status}`);
-        
+        const response = await fetch(url);
         const data = await response.json();
-        console.log(data.message);
-        
+        console.log("Odebrano:", data.message);
+        return data;
     } catch (error) {
-        console.error(error.message);
-        process.exit(1);
+        console.error("Błąd połączenia z:", url);
+        throw error;
     }
 }
 
-fetchGreeting();
+if (process.argv[1] && process.argv[1].endsWith('app.js')) {
+    fetchGreeting();
+}
