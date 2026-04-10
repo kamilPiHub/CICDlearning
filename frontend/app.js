@@ -1,5 +1,5 @@
 export async function fetchGreeting() {
-    const url = process.env.BACKEND_URL || 'http://127.0.0.1:5000/';
+    const url = process.env.BACKEND_URL || 'http://localhost:5000/';
     
     try {
         const response = await fetch(url);
