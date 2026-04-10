@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD Test App</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .highlight { color: #2ea44f; font-weight: bold; }
+        .error { color: #d73a49; font-weight: bold; }
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <p>Odpowiedź z API (Backend):</p>
+        <p id="api-status">Ładowanie danych...</p>
+    </div>
+
+    <script>
+        fetch('http://127.0.0.1:5000/')
+            .then(response => response.json())
+            .then(data => {
+                const statusElement = document.getElementById('api-status');
+                statusElement.innerText = data.message;
+                statusElement.className = "highlight";
+            })
+            .catch(error => {
+                const statusElement = document.getElementById('api-status');
+                statusElement.innerText = "Błąd: Brak połączenia z backendem!";
+                statusElement.className = "error";
+            });
+    </script>
+</body>
+</html>
